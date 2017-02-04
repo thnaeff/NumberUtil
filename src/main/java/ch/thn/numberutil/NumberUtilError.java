@@ -1,5 +1,5 @@
 /**
- *    Copyright 2013 Thomas Naeff (github.com/thnaeff)
+ *    Copyright 2017 Thomas Naeff (github.com/thnaeff)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,14 @@
 package ch.thn.numberutil;
 
 /**
+ * An error caused by a {@link NumberUtil} operation.
+ *
  * @author Thomas Naeff (github.com/thnaeff)
  *
  */
 public class NumberUtilError extends Error {
   private static final long serialVersionUID = 7533654119310669203L;
 
-  /**
-   *
-   *
-   * @param message
-   */
   public NumberUtilError(String message) {
     super(message);
   }

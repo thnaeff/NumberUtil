@@ -1,5 +1,5 @@
-# StringUtil
-String utility methods
+# NumberUtil
+Number utility methods
 
 
 ---
@@ -12,8 +12,20 @@ String utility methods
 
 ---
 
+##Features
 
-
+* isOdd/isEven
+	* Checks if an interger is odd or even
+* roundDecimals
+	* Rounding of float or double values
+* createDecimalFormat
+	* Convenience methods to create common decimal formats
+* formatNumber
+	* Formatting a number with a few common options
+* add/subtract/multiply/divide/remainder/gt/lt
+	* Number operations which can be used on any <<Number>> type
+* generateRandomNumber
+	* Generates one or more random number in a defined range
 
 
 
