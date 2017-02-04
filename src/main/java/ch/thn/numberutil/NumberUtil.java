@@ -25,6 +25,7 @@ import java.util.Random;
 /**
  * @author Thomas Naeff (github.com/thnaeff)
  *
+ *
  */
 public class NumberUtil {
 
