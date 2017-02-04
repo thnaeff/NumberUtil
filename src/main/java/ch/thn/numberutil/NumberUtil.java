@@ -1,17 +1,15 @@
 /**
- *    Copyright 2017 Thomas Naeff (github.com/thnaeff)
+ * Copyright 2017 Thomas Naeff (github.com/thnaeff)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  *
  */
 package ch.thn.numberutil;
@@ -25,8 +23,8 @@ import java.util.Random;
 /**
  * Utility methods which handle various number operations and functions related to numbers.<br />
  * <br />
- * It contains operations which can be applied to any type of number (see {@link #add(Number, Number)},
- * {@link #subtract(Number, Number)}, etc.)
+ * It contains operations which can be applied to any type of number (see
+ * {@link #add(Number, Number)}, {@link #subtract(Number, Number)}, etc.)
  *
  *
  * @author Thomas Naeff (github.com/thnaeff)
@@ -34,7 +32,7 @@ import java.util.Random;
 public class NumberUtil {
 
 
-  //Hierarchy according to: http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.4
+  // Hierarchy according to: http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.4
   private enum OperationType {
     SHORT,
     INTEGER,
@@ -43,8 +41,9 @@ public class NumberUtil {
     DOUBLE;
   }
 
-  //Number types for easier if/switch etc. usage (so that instanceof does not need to be used)
-  private static final HashMap<Class<?>, OperationType> types = new LinkedHashMap<Class<?>, OperationType>();
+  // Number types for easier if/switch etc. usage (so that instanceof does not need to be used)
+  private static final HashMap<Class<?>, OperationType> types =
+      new LinkedHashMap<Class<?>, OperationType>();
   static {
     types.put(Short.class, OperationType.SHORT);
     types.put(Integer.class, OperationType.INTEGER);
@@ -53,8 +52,9 @@ public class NumberUtil {
     types.put(Double.class, OperationType.DOUBLE);
   }
 
-  //Shared decimal patterns
-  private static final HashMap<Integer, DecimalFormat> roundDecimals = new LinkedHashMap<Integer, DecimalFormat>();
+  // Shared decimal patterns
+  private static final HashMap<Integer, DecimalFormat> roundDecimals =
+      new LinkedHashMap<Integer, DecimalFormat>();
   static {
     roundDecimals.put(1, new DecimalFormat("#.#"));
     roundDecimals.put(2, new DecimalFormat("#.##"));
@@ -65,16 +65,16 @@ public class NumberUtil {
 
   private static int MAX_DIGIT_PATTERN = 6;
 
-  //Some predefined digit patterns
-  private static final HashMap<Integer, String[]> digitPattern = new LinkedHashMap<Integer, String[]>();
+  // Some predefined digit patterns
+  private static final HashMap<Integer, String[]> digitPattern =
+      new LinkedHashMap<Integer, String[]>();
   static {
-    digitPattern.put(1, new String[] {"#", 		"0"});
-    digitPattern.put(2, new String[] {"##", 	"00"});
-    digitPattern.put(3, new String[] {"###", 	"000"});
-    digitPattern.put(4, new String[] {"####", 	"0000"});
-    digitPattern.put(5, new String[] {"#####", 	"00000"});
-    digitPattern.put(MAX_DIGIT_PATTERN,
-        new String[] {"######", "000000"});
+    digitPattern.put(1, new String[] {"#", "0"});
+    digitPattern.put(2, new String[] {"##", "00"});
+    digitPattern.put(3, new String[] {"###", "000"});
+    digitPattern.put(4, new String[] {"####", "0000"});
+    digitPattern.put(5, new String[] {"#####", "00000"});
+    digitPattern.put(MAX_DIGIT_PATTERN, new String[] {"######", "000000"});
   }
 
 
@@ -85,7 +85,7 @@ public class NumberUtil {
    * @param num The number to test
    * @return True if the integer is odd, false if the number is even
    */
-  public static boolean isOdd(int num){
+  public static boolean isOdd(int num) {
     return num % 2 != 0;
   }
 
@@ -95,7 +95,7 @@ public class NumberUtil {
    * @param num The number to test
    * @return True if the integer is even, false if the number is even
    */
-  public static boolean isEven(int num){
+  public static boolean isEven(int num) {
     return num % 2 == 0;
   }
 
@@ -111,8 +111,8 @@ public class NumberUtil {
     if (roundDecimals.containsKey(numberOfDecimals)) {
       return Double.valueOf(roundDecimals.get(numberOfDecimals).format(num));
     } else {
-      return Double.valueOf(createDecimalFormat(1, numberOfDecimals,
-          false, false, false, false, false).format(num));
+      return Double.valueOf(
+          createDecimalFormat(1, numberOfDecimals, false, false, false, false, false).format(num));
     }
   }
 
@@ -128,9 +128,10 @@ public class NumberUtil {
     if (roundDecimals.containsKey(numberOfDecimals)) {
       return Float.valueOf(roundDecimals.get(numberOfDecimals).format(num));
     } else {
-      return Float.valueOf(createDecimalFormat(1, numberOfDecimals,
-          false, false, false, false, false).format(num));
-    }	}
+      return Float.valueOf(
+          createDecimalFormat(1, numberOfDecimals, false, false, false, false, false).format(num));
+    }
+  }
 
   /**
    * This method provides an easy way to create a {@link DecimalFormat} object.<br>
@@ -147,8 +148,8 @@ public class NumberUtil {
    * @return The decimal format
    */
   public static DecimalFormat createDecimalFormat(int minNumberOfDigits, int maxNumberOfDecimals,
-      boolean currency, boolean internationalCurrency, boolean leadingZeroes,
-      boolean percentage, boolean grouping) {
+      boolean currency, boolean internationalCurrency, boolean leadingZeroes, boolean percentage,
+      boolean grouping) {
     if (minNumberOfDigits <= 0) {
       throw new NumberUtilError("Minimum number of digits has to be > 0");
     }
@@ -160,11 +161,11 @@ public class NumberUtil {
     StringBuilder sb = new StringBuilder(minNumberOfDigits + maxNumberOfDecimals);
 
     if (currency || internationalCurrency) {
-      //Will be replaced by the currency symbol
+      // Will be replaced by the currency symbol
       sb.append("\u00A4");
 
       if (internationalCurrency) {
-        //Two currency symbols are replaced with the international currency symbol
+        // Two currency symbols are replaced with the international currency symbol
         sb.append("\u00A4");
       }
     }
@@ -216,7 +217,7 @@ public class NumberUtil {
     }
 
     if (grouping && sb.length() > 3) {
-      //Add the grouping separator if requested
+      // Add the grouping separator if requested
       sb.insert(sb.length() - 3, ',');
     }
 
@@ -237,8 +238,8 @@ public class NumberUtil {
    * @return The formatted number
    */
   public static String formatNumber(Number num, int minNumberOfDigits, int maxNumberOfDecimals,
-      boolean currency, boolean internationalCurrency, boolean leadingZeroes,
-      boolean percentage, boolean grouping) {
+      boolean currency, boolean internationalCurrency, boolean leadingZeroes, boolean percentage,
+      boolean grouping) {
     return createDecimalFormat(minNumberOfDigits, maxNumberOfDecimals, currency,
         internationalCurrency, leadingZeroes, percentage, grouping).format(num);
   }
@@ -255,9 +256,9 @@ public class NumberUtil {
    */
   public static String formatNumber(Number num, boolean currency, boolean internationalCurrency,
       boolean percentage, boolean grouping) {
-    //Use at least 4 digits to make the grouping work
-    return createDecimalFormat(4, 0, currency,
-        internationalCurrency, false, percentage, grouping).format(num);
+    // Use at least 4 digits to make the grouping work
+    return createDecimalFormat(4, 0, currency, internationalCurrency, false, percentage, grouping)
+        .format(num);
   }
 
   /**
@@ -272,8 +273,8 @@ public class NumberUtil {
    */
   public static String formatNumber(Number num, int minNumberOfDigits, int maxNumberOfDecimals,
       boolean leadingZeroes, boolean grouping) {
-    return createDecimalFormat(minNumberOfDigits, maxNumberOfDecimals, false,
-        false, leadingZeroes, false, grouping).format(num);
+    return createDecimalFormat(minNumberOfDigits, maxNumberOfDecimals, false, false, leadingZeroes,
+        false, grouping).format(num);
   }
 
   /**
@@ -284,17 +285,16 @@ public class NumberUtil {
    * @return The formatted number
    */
   public static String formatNumber(Number num, boolean grouping) {
-    //Use at least 4 digits to make the grouping work
-    return createDecimalFormat(4, 0, false,
-        false, false, false, grouping).format(num);
+    // Use at least 4 digits to make the grouping work
+    return createDecimalFormat(4, 0, false, false, false, false, grouping).format(num);
   }
 
 
   /**
    * Adds n1 + n2 for any number type.<br>
-   * The returned number result has the type of the input number
-   * with the higher "precision" (for example, a float value added to an
-   * integer value results in a floating point operation, returning a float type).
+   * The returned number result has the type of the input number with the higher "precision" (for
+   * example, a float value added to an integer value results in a floating point operation,
+   * returning a float type).
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -320,9 +320,9 @@ public class NumberUtil {
 
   /**
    * Subtracts n1 - n2 for any number type.<br>
-   * The returned number result has the type of the input number
-   * with the higher "precision" (for example, a float value subtracted from an
-   * integer value results in a floating point operation, returning a float type).
+   * The returned number result has the type of the input number with the higher "precision" (for
+   * example, a float value subtracted from an integer value results in a floating point operation,
+   * returning a float type).
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -348,9 +348,9 @@ public class NumberUtil {
 
   /**
    * Multiplies n1 * n2 for any number type.<br>
-   * The returned number result has the type of the input number
-   * with the higher "precision" (for example, a float value multiplied by an
-   * integer value results in a floating point operation, returning a float type).
+   * The returned number result has the type of the input number with the higher "precision" (for
+   * example, a float value multiplied by an integer value results in a floating point operation,
+   * returning a float type).
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -377,9 +377,9 @@ public class NumberUtil {
 
   /**
    * Divides n1 / n2 for any number type.<br>
-   * The returned number result has the type of the input number
-   * with the higher "precision" (for example, a float value divided by an
-   * integer value results in a floating point operation, returning a float type).
+   * The returned number result has the type of the input number with the higher "precision" (for
+   * example, a float value divided by an integer value results in a floating point operation,
+   * returning a float type).
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -405,9 +405,9 @@ public class NumberUtil {
 
   /**
    * Calculates the remainder n1 % n2 for any number type.<br>
-   * The returned number result has the type of the input number
-   * with the higher "precision" (for example, a float value multiplied by an
-   * integer value results in a floating point operation, returning a float type).
+   * The returned number result has the type of the input number with the higher "precision" (for
+   * example, a float value multiplied by an integer value results in a floating point operation,
+   * returning a float type).
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -482,10 +482,9 @@ public class NumberUtil {
   }
 
   /**
-   * Determines the type of the operation. For example, a float value multiplied
-   * by an integer value results in a floating point operation, returning a
-   * float type). The floating point operations are defined in
-   * http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.4
+   * Determines the type of the operation. For example, a float value multiplied by an integer value
+   * results in a floating point operation, returning a float type). The floating point operations
+   * are defined in http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.4
    *
    * @param num1 The first number
    * @param num2 The second number
@@ -510,9 +509,9 @@ public class NumberUtil {
   }
 
   /**
-   * Generates a single random number. The type of the resulting numbers is the type of the
-   * given min or max value, whichever has the higher "precision"
-   * (short -> int -> long -> float -> double)<br>
+   * Generates a single random number. The type of the resulting numbers is the type of the given
+   * min or max value, whichever has the higher "precision" (short -> int -> long -> float ->
+   * double)<br>
    * <br>
    * For multiple random numbers use {@link #generateRandomNumbers(int, Number, Number)}
    *
@@ -525,9 +524,8 @@ public class NumberUtil {
   }
 
   /**
-   * Generates random numbers. The type of the resulting numbers is the type of the
-   * given min or max value, whichever has the higher "precision"
-   * (short -> int -> long -> float -> double)
+   * Generates random numbers. The type of the resulting numbers is the type of the given min or max
+   * value, whichever has the higher "precision" (short -> int -> long -> float -> double)
    *
    * @param count The cound of random numbers to generate
    * @param min The minimal number to generate
@@ -541,31 +539,31 @@ public class NumberUtil {
     OperationType type = getOperationType(min, max);
 
     if (type == OperationType.SHORT) {
-      //Including the maximum number (from min to max)
+      // Including the maximum number (from min to max)
       int randomMax = max.intValue() - min.intValue() + 1;
       for (int i = 0; i < count; i++) {
         numbers.add(random.nextInt(randomMax) + min.intValue());
       }
     } else if (type == OperationType.INTEGER) {
-      //Including the maximum number (from min to max)
+      // Including the maximum number (from min to max)
       int randomMax = max.intValue() - min.intValue() + 1;
       for (int i = 0; i < count; i++) {
         numbers.add(random.nextInt(randomMax) + min.intValue());
       }
     } else if (type == OperationType.LONG) {
-      //Including the maximum number (from min to max)
+      // Including the maximum number (from min to max)
       long randomMax = max.longValue() - min.longValue() + 1l;
       for (int i = 0; i < count; i++) {
         numbers.add(random.nextLong() * randomMax + min.longValue());
       }
     } else if (type == OperationType.FLOAT) {
-      //Excluding the maximum number (between min and max)
+      // Excluding the maximum number (between min and max)
       float randomMax = max.floatValue() - min.floatValue();
       for (int i = 0; i < count; i++) {
         numbers.add(random.nextFloat() * randomMax + min.floatValue());
       }
     } else if (type == OperationType.DOUBLE) {
-      //Excluding the maximum number (between min and max)
+      // Excluding the maximum number (between min and max)
       double randomMax = max.doubleValue() - min.doubleValue();
       for (int i = 0; i < count; i++) {
         numbers.add(random.nextDouble() * randomMax + min.doubleValue());
